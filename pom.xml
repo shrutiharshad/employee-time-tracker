@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.7.RELEASE</version>
+<version>1.1.5-${maven.build.timestamp}</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.masterjavaonline.timetracker</groupId>
@@ -95,16 +95,14 @@
             </plugin>
         </plugins>
     </build>
-   <distributionManagement>
-    <repository>
-      <id>deployment</id>
-      <name>Internal Releases</name>
-      <url>http://10.0.2.15:8081/repository/app-releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>deployment</id>
-      <name>Internal Snapshots</name>
-      <url>http://10.0.2.15:8081/repository/app-snapshot/</url>
-    </snapshotRepository>       
-  </distributionManagement>
+ 
+         <distributionManagement>
+<repository>
+<id>mv</id>
+<url>http://192.168.0.42:8081/repository/shruti_maven/</url>
+</repository>
+</distributionManagement>
+	<properties>
+<maven.build.timestamp.format>yyyy-MM-dd-HHmm</maven.build.timestamp.format>
+</properties>
 </project>
