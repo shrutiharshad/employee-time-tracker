@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+ <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-<version>1.1.5-${maven.build.timestamp}</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.7.18</version> <!-- Fixed: Removed dynamic timestamp -->
+        <relativePath/> 
     </parent>
+
     <groupId>com.masterjavaonline.timetracker</groupId>
     <artifactId>employee-time-tracker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>employee-time-tracker</name>
     <description>A Spring boot web project for Employee Time Tracking</description>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <!-- Required for Swagger 2.9.2 compatibility with Spring Boot 2.6+ -->
+        <spring.mvc.pathmatch.matching-strategy>ant_path_matcher</spring.mvc.pathmatch.matching-strategy>
+    </properties>
 
     <dependencies>
+        <!-- Swagger Documentation -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -26,6 +34,8 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
+
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -34,26 +44,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- Utilities -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
@@ -65,7 +71,6 @@
             <artifactId>zxcvbn</artifactId>
             <version>1.2.3</version>
         </dependency>
-
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
@@ -74,7 +79,6 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.5</version>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -82,6 +86,12 @@
             <version>1.8</version>
         </dependency>
 
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -90,28 +100,34 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-			 <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <!-- select non-aggregate reports -->
-              <report>report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
+            
+            <!-- JaCoCo Plugin Fixed: Replaced reportSets with executions -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
- 
-         <distributionManagement>
-<repository>
-<id>mv</id>
-<url>http://192.168.0.42:8081/repository/shruti_maven/</url>
-</repository>
-</distributionManagement>
-	<properties>
-<maven.build.timestamp.format>yyyy-MM-dd-HHmm</maven.build.timestamp.format>
-</properties>
+
+    <distributionManagement>
+        <repository>
+            <id>mv</id>
+            <url>http://192.168.0.42</url>
+        </repository>
+    </distributionManagement>
 </project>
